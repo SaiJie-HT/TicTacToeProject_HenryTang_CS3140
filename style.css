@@ -1,0 +1,30 @@
+body {
+    background-color:black;
+}
+
+h1 {
+    color: gold;
+    font-size: 5rem;
+    text-align:center;
+    margin:5%
+}
+
+.gameContainer {
+    margin:5%;
+}
+
+.gameBoard {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    background-color: black;
+}
+
+td {
+    background-color: lightgrey;
+    width:10vw;
+    height:10vw;
+    border:solid grey;
+    border-width:0.4vw;
+}
