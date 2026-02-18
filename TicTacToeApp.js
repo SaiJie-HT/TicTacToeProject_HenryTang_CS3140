@@ -12,7 +12,7 @@ let gameState = ["", "", "",
                  "", "", "",
                  "", "", ""];
 const winConditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
-                       [0, 3, 6], [1, 4, 5], [2, 5, 8],
+                       [0, 3, 6], [1, 4, 7], [2, 5, 8],
                        [0, 4, 8], [2, 4, 6]];
 
 announcer(currentPlayerTurn());
@@ -31,26 +31,60 @@ function handlePlayerChange() {
     playerTurn = playerTurn === "X" ? "O" : "X";
 }
 
+
 function handleResultValidation() {
-    if (amtOfTurns >= 5 && gameState.includes("")) {
-        for (let i = 0; i < winConditions.length; i++) {
-            let correctCondition = true;
-            for (let k = 0; k < 2; k++) {
-                if ((gameState[winConditions[i][k]] === "" && gameState[winConditions[i][k+1]] === "") || gameState[winConditions[i][k]] !== gameState[winConditions[i][k + 1]]) {
-                    correctCondition = false;
-                }
+    console.log(amtOfTurns);
+
+    if (amtOfTurns >= 5) {
+        for (let i = 0; i < winConditions.length && gameActive; i++) {
+
+
+            const [a, b, c] = winConditions[i];
+            const tempArray = [, , ];
+
+            assumeTrue = true;
+            for (let j = 0; j < winConditions[i].length; j++) {
+                tempArray[j] = gameState[winConditions[i][j]];
+
             }
-            if (correctCondition) {
+            console.log("suposed to copy", tempArray);
+            //checks all at once
+            if ((gameState[a] === gameState[b] && gameState[b] === gameState[c] && gameState[a] === gameState[c]) && !tempArray.includes("")) {
                 gameActive = false;
             }
+
         }
 
-    } else if (amtOfTurns === 9) {
-        playerTurn = "draw";
-        gameActive = false;
+        if (amtOfTurns === 9 && !gameState.includes("") && gameActive) {
+            playerTurn = "draw";
+            gameActive = false;
+        }   
     } 
 
 }
+
+
+//function handleResultValidation() {
+//    console.log(amtOfTurns);
+//    if (amtOfTurns >= 5) {
+//        for (let i = 0; i < winConditions.length; i++) {
+//            let correctCondition = false;
+//            for (let k = 0; k < 2; k++) {
+//                if ((gameState[winConditions[i][k]] === "") || gameState[winConditions[i][k]] !== gameState[winConditions[i][k + 1]]) {
+//                    correctCondition = ;
+//                }
+//            }
+//            if (correctCondition) {
+//                gameActive = false;
+//            }
+//        }
+//
+//    } else if (amtOfTurns >= 9 ) {
+//        playerTurn = "draw";
+//        gameActive = false;
+//    } 
+//
+//}
 
 function handleRestartGame() {
     console.log("test");
@@ -73,7 +107,6 @@ function handleRestartGame() {
 function handleCellClick(clickedCellEvent) {
     handleCellPlayed(clickedCellEvent.target, parseInt(clickedCellEvent.target.id, 10));
     amtOfTurns++;
-    console.log(amtOfTurns);
     handleResultValidation();
     gameProcessing();
 }
@@ -110,8 +143,8 @@ button.addEventListener("click", (e) => {
 //    for (let i = 0; i < winConditions.length; i++) {
 //        let correctCondition = true;
 //        for (let k = 0; k < 2; k++) {
-//            //onsole.log(winConditions[i][k], "and ", winConditions[i][k+1]);
-//            //console.log("not '' :", gameState[winConditions[i][k]],"is ", gameState[winConditions[i][k]] === "",  " and comparing: ", gameState[winConditions[i][k]], "to", gameState[winConditions[i][k+1]], "is :", gameState[winConditions[i][k]] !== gameState[winConditions[i][k+1]]);
+//            console.log(winConditions[i][k], "and ", winConditions[i][k+1]);
+//            console.log("not '' :", gameState[winConditions[i][k]],"is ", gameState[winConditions[i][k]] === "",  " and comparing: ", gameState[winConditions[i][k]], "to", gameState[winConditions[i][k+1]], "is :", gameState[winConditions[i][k]] !== gameState[winConditions[i][k+1]]);
 //            if (gameState[winConditions[i][k]] === "" || gameState[winConditions[i][k]] !== gameState[winConditions[i][k+1]]) {
 //                //console.log("I've become false");
 //                correctCondition = false;
@@ -119,7 +152,7 @@ button.addEventListener("click", (e) => {
 //            //console.log(winConditions[i][k], "and ", winConditions[i][k+1]);
 //
 //        }
-//        //console.log("split");
+//        console.log("split");
 //        //console.log("return true when no change:", found);
 //        if (correctCondition) {
 //            gameActive = false;
